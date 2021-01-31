@@ -13,7 +13,6 @@ var __settings_default: Dictionary = {
 	},
 	"twitch": {
 		"channel": "",
-		"username": "",
 		"oauth_token": ""
 	}
 }
@@ -30,7 +29,7 @@ func _ready() -> void:
 		FileManager.save_json(self.SETTINGS_PATH, self.__settings)
 
 
-func get_setting(name):
+func get_setting(name, default = null):
 	var path = name.split("/")
 	var location = self.__settings
 
@@ -41,14 +40,22 @@ func get_setting(name):
 			location = location.get(part)
 		else:
 			Logger.warn("Could not get setting '%s'" % name)
-			return
+			return default
 
 	var setting_name = path[path.size() - 1]
 	if location.has(setting_name):
 		return location.get(setting_name)
 	else:
 		Logger.warn("Could not get setting '%s'" % name)
-		return
+		return default
+
+
+func save_settings() -> void:
+	FileManager.save_json(self.SETTINGS_PATH, self.__settings)
+
+
+func set_setting(name: String, value) -> void:
+	self.__setting_changed(name, value)
 
 
 func __setting_changed(name: String, value) -> void:

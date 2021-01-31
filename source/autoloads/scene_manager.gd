@@ -16,3 +16,7 @@ func load_scene( name: String ) -> void:
 		self.get_tree().change_scene_to( self.__scenes_by_name[ name ] )
 	else:
 		push_error( "Could not load scene with name: %s" % name )
+
+
+func reload_current() -> void:
+	self.get_tree().reload_current_scene()

@@ -1,5 +1,7 @@
 extends Node
 
+enum GameModes { LOCAL = 0, STREAMER, EXTERNAL }
+
 
 # Time globals
 
@@ -13,15 +15,5 @@ var played_intro = true
 
 
 # Instance globals
-var boss_health_instance = null
-var camera_instance = null
-var health_instance = null
-var main_instance = null
-var music_instance = null
-var player_instance = null
-var queen_instance = null
-var world_instance = null
-
-
-func reset_player_instance() -> void:
-	self.player_instance = null
+var game_mode: int = GameModes.STREAMER
+var twitch_input_instance = null
