@@ -1,6 +1,6 @@
 extends Node
 
-enum GameModes { LOCAL = 0, STREAMER, EXTERNAL }
+enum GameModes { LOCAL = 0, STREAMER, EXTERNAL, MAX }
 
 
 # Time globals
@@ -15,5 +15,5 @@ var played_intro = true
 
 
 # Instance globals
-var game_mode: int = GameModes.STREAMER
+var game_mode: int = GameModes.LOCAL
 var twitch_input_instance = null

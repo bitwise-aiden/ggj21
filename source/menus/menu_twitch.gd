@@ -36,11 +36,21 @@ func _on_connect_button_up() -> void:
 		SceneManager.load_scene("main")
 		return
 
-	Globals.twitch_input_instance.call_deferred("queue_free")
-	Globals.twitch_input_instance = null
+	if Globals.twitch_input_instance:
+		Globals.twitch_input_instance.call_deferred("queue_free")
+		Globals.twitch_input_instance = null
 
 	self.error.visible = true
 	self.connect.disabled = false
 	self.connect.visible = true
 	self.connecting.visible = false
+
+
+
+func _on_menu_button_up() -> void:
+	if Globals.twitch_input_instance:
+		Globals.twitch_input_instance.call_deferred("queue_free")
+		Globals.twitch_input_instance = null
+
+	SceneManager.load_scene("menu_start")
 

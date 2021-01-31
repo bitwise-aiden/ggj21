@@ -92,7 +92,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="ggj2021"
+config/name="Chat said what!?"
 run/main_scene="res://source/menus/menu_start.tscn"
 config/icon="res://icon.png"
 

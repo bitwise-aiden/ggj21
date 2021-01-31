@@ -1,5 +1,8 @@
 extends TileMap
 
+signal unpaused()
+
+
 enum DIRECTION { up = 0, down, left, right }
 
 const DIRECTION_OFFSETS: Array = [
@@ -26,12 +29,16 @@ const TEAM_TILES: Array = [
 ]
 
 onready var countdown = $countdown
+onready var menu = $menu
+onready var stream_warning = $stream_warning
 onready var team_messages: Array = [
 	$red_team,
 	$blue_team
 ]
 
 var __playing = false
+var __paused = false
+var __over = false
 var __team_positions: Array = [Vector2(4,11), Vector2(34,11)]
 #var __team_positions: Array = [Vector2(17,10), Vector2(21,10)]
 var __teams: Array = [[],[]]
@@ -47,6 +54,7 @@ func _ready() -> void:
 			var instance = ExternalInput.new()
 			self.call_deferred("add_child", instance)
 
+	self.stream_warning.visible = Globals.game_mode == Globals.GameModes.STREAMER
 
 	for cell in self.get_used_cells_by_id(0):
 		var random: float = randf()
@@ -83,9 +91,24 @@ func _ready() -> void:
 	for cell in self.get_used_cells_by_id(14):
 		self.set_cellv(cell, 14, randi() % 2, randi() % 2, randi() % 2)
 
+	var event = InputEventKey.new()
+	event.scancode = KEY_ESCAPE
+	var action_name = "pause"
+	InputMap.add_action(action_name)
+	InputMap.action_add_event(action_name, event)
+
 	Event.connect("player_joined", self, "__player_joined")
 	Event.connect("player_moved", self, "__player_moved")
 	Event.connect("reload_game", self, "__reload_game")
+
+
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("pause") && !self.__over:
+		self.__paused = !self.__paused
+		self.menu.visible = self.__paused
+
+		if !self.__paused:
+			self.emit_signal("unpaused")
 
 
 func __get_player_team(username: String) -> int:
@@ -142,14 +165,14 @@ func __player_joined(username: String) -> void:
 
 
 func __player_moved(username: String, direction: int) -> void:
-	if !self.__playing:
+	if !self.__playing || self.__paused:
 		return
 
 	var team = self.__get_player_team(username)
 	if team == -1:
 		return
 
-	if self.__move_player(team, direction):
+	if self.__move_player(team, direction) && self.__playing:
 		var direction_name = self.DIRECTION_NAMES[direction]
 		var message_params = [username, direction_name]
 		if team == 1:
@@ -164,7 +187,11 @@ func __reload_game() -> void:
 
 	SceneManager.reload_current()
 
+
 func __start_game() -> void:
+	if self.__paused:
+		yield(self, "unpaused")
+
 	for index in range(3, 0, -1):
 		self.countdown.text = str(index)
 		Event.emit_signal("game_starting", index)
@@ -184,6 +211,10 @@ func __start_game() -> void:
 
 func __team_won(team: int) -> void:
 	self.__playing = false
+	self.__over = true
+
+	for i in range(self.team_messages.size()):
+		self.team_messages[i].text = "Winners!" if i == team else "Losers..."
 
 	yield(self.get_tree().create_timer(0.1), "timeout")
 	self.__valid_fill_tiles.append(self.TEAM_TILES[(team + 1) % 2])
@@ -202,3 +233,14 @@ func __team_won(team: int) -> void:
 				new_neighbours.append(new_neighbour)
 
 		neighbours = new_neighbours
+
+	yield(self.get_tree().create_timer(1.0), "timeout")
+	self.menu.visible = true
+
+
+func _on_restart_button_up() -> void:
+	SceneManager.reload_current()
+
+
+func _on_menu_button_up() -> void:
+	SceneManager.load_scene("menu_start")

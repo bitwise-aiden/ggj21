@@ -1,12 +1,33 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://assets/fonts/dogica.tres" type="DynamicFont" id=1]
-[ext_resource path="res://assets/art/button.png" type="Texture" id=2]
+[ext_resource path="res://assets/art/button_connect.png" type="Texture" id=2]
 [ext_resource path="res://source/menus/menu_twitch.gd" type="Script" id=3]
+[ext_resource path="res://assets/art/button_connect_hover.png" type="Texture" id=4]
+[ext_resource path="res://assets/art/textbox_style.tres" type="StyleBox" id=5]
+[ext_resource path="res://assets/art/textbox_2.png" type="Texture" id=6]
+[ext_resource path="res://assets/art/tickbox.png" type="Texture" id=7]
+[ext_resource path="res://assets/art/tickbox_pressed.png" type="Texture" id=8]
+[ext_resource path="res://assets/art/button_menu.png" type="Texture" id=9]
+[ext_resource path="res://assets/art/button_menu_hover.png" type="Texture" id=10]
+
+[sub_resource type="StyleBoxTexture" id=4]
+
+[sub_resource type="StyleBoxTexture" id=3]
+
+[sub_resource type="StyleBoxTexture" id=5]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 454, 53 )
+expand_margin_left = 3.0
+expand_margin_right = 3.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxEmpty" id=7]
 
 [node name="menu_twitch" type="Control"]
+anchor_top = -0.00123732
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.998763
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": true
@@ -27,9 +48,14 @@ __meta__ = {
 
 [node name="channel" type="LineEdit" parent="inputs"]
 margin_right = 202.0
-margin_bottom = 22.0
+margin_bottom = 21.0
+rect_min_size = Vector2( 192, 21 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/normal = ExtResource( 5 )
 custom_fonts/font = ExtResource( 1 )
+custom_colors/selection_color = Color( 0.729412, 0.760784, 0.729412, 1 )
 custom_colors/cursor_color = Color( 0.729412, 0.760784, 0.729412, 1 )
+custom_colors/font_color_selected = Color( 0.219608, 0.168627, 0.14902, 1 )
 custom_colors/font_color = Color( 0.729412, 0.760784, 0.729412, 1 )
 max_length = 25
 placeholder_text = "channel"
@@ -39,11 +65,16 @@ __meta__ = {
 }
 
 [node name="oauth_token" type="LineEdit" parent="inputs"]
-margin_top = 26.0
+margin_top = 25.0
 margin_right = 202.0
-margin_bottom = 48.0
+margin_bottom = 46.0
+rect_min_size = Vector2( 192, 21 )
+custom_styles/focus = SubResource( 3 )
+custom_styles/normal = SubResource( 5 )
 custom_fonts/font = ExtResource( 1 )
+custom_colors/selection_color = Color( 0.729412, 0.760784, 0.729412, 1 )
 custom_colors/cursor_color = Color( 0.729412, 0.760784, 0.729412, 1 )
+custom_colors/font_color_selected = Color( 0.219608, 0.168627, 0.14902, 1 )
 custom_colors/font_color = Color( 0.729412, 0.760784, 0.729412, 1 )
 max_length = 64
 secret = true
@@ -57,8 +88,18 @@ margin_left = 536.0
 margin_top = 390.0
 margin_right = 740.0
 margin_bottom = 414.0
+rect_rotation = 0.00578415
+custom_icons/radio_checked = ExtResource( 8 )
+custom_icons/checked = ExtResource( 8 )
+custom_icons/radio_unchecked = ExtResource( 7 )
+custom_icons/unchecked = ExtResource( 7 )
+custom_styles/focus = SubResource( 7 )
 custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color_disabled = Color( 0.729412, 0.760784, 0.729412, 1 )
+custom_colors/font_color_hover_pressed = Color( 0.729412, 0.760784, 0.729412, 1 )
 custom_colors/font_color = Color( 0.729412, 0.760784, 0.729412, 1 )
+custom_colors/font_color_hover = Color( 0.729412, 0.760784, 0.729412, 1 )
+custom_colors/font_color_pressed = Color( 0.729412, 0.760784, 0.729412, 1 )
 text = "Remember me"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -71,9 +112,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -176.0
-margin_top = 90.0
+margin_top = 65.0
 margin_right = 176.0
-margin_bottom = 117.0
+margin_bottom = 92.0
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0.780392, 0.635294, 0.564706, 1 )
 custom_colors/font_color_shadow = Color( 0.443137, 0.321569, 0.258824, 1 )
@@ -88,31 +129,32 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -125.0
-margin_top = 140.0
-margin_right = 125.0
-margin_bottom = 190.0
+margin_left = -170.0
+margin_top = 115.0
+margin_bottom = 139.0
+rect_scale = Vector2( 2, 2 )
 texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 2 )
+texture_hover = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="text" type="Label" parent="connect"]
+[node name="menu" type="TextureButton" parent="."]
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-margin_left = -125.0
-margin_right = 7.62939e-06
-margin_bottom = 22.0
+anchor_bottom = 0.5
+margin_left = -97.0
+margin_top = 190.0
+margin_right = -1.0
+margin_bottom = 214.0
 rect_scale = Vector2( 2, 2 )
-custom_fonts/font = ExtResource( 1 )
-custom_colors/font_color = Color( 0.729412, 0.760784, 0.729412, 1 )
-custom_colors/font_color_shadow = Color( 0.360784, 0.376471, 0.360784, 1 )
-text = "Connect"
-align = 1
-valign = 1
+texture_normal = ExtResource( 9 )
+texture_pressed = ExtResource( 9 )
+texture_hover = ExtResource( 10 )
 __meta__ = {
-"_edit_use_anchors_": false,
-"_editor_description_": ""
+"_edit_use_anchors_": false
 }
 
 [node name="connecting" type="Label" parent="."]
@@ -122,9 +164,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -176.0
-margin_top = 160.0
+margin_top = 115.0
 margin_right = 176.0
-margin_bottom = 187.0
+margin_bottom = 142.0
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0.729412, 0.760784, 0.729412, 1 )
 custom_colors/font_color_shadow = Color( 0.443137, 0.321569, 0.258824, 1 )
@@ -134,3 +176,4 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="button_up" from="connect" to="." method="_on_connect_button_up"]
+[connection signal="button_up" from="menu" to="." method="_on_menu_button_up"]

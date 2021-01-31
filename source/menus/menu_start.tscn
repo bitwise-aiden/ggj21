@@ -1,10 +1,15 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/fonts/dogica.tres" type="DynamicFont" id=1]
 [ext_resource path="res://assets/art/title.png" type="Texture" id=2]
 [ext_resource path="res://assets/art/streamer.png" type="Texture" id=3]
-[ext_resource path="res://assets/art/button.png" type="Texture" id=4]
+[ext_resource path="res://assets/art/button_play_hover.png" type="Texture" id=4]
 [ext_resource path="res://source/menus/menu_start.gd" type="Script" id=5]
+[ext_resource path="res://assets/art/button_direction.png" type="Texture" id=6]
+[ext_resource path="res://assets/art/button_direction_hover.png" type="Texture" id=7]
+[ext_resource path="res://assets/art/button_play.png" type="Texture" id=8]
+[ext_resource path="res://assets/art/local.png" type="Texture" id=9]
+[ext_resource path="res://assets/art/external.png" type="Texture" id=10]
 
 [node name="menu_start" type="Control"]
 anchor_right = 1.0
@@ -14,15 +19,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="shadow" type="Sprite" parent="."]
-modulate = Color( 0.494118, 0.494118, 0.494118, 1 )
-position = Vector2( 650, 160 )
-scale = Vector2( 10, 10 )
-texture = ExtResource( 2 )
-
 [node name="title" type="Sprite" parent="."]
-position = Vector2( 640, 150 )
-scale = Vector2( 10, 10 )
+position = Vector2( 640, 175 )
+scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 2 )
 
 [node name="mode_select" type="Control" parent="."]
@@ -31,25 +30,27 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -400.0
-margin_top = -60.0
+margin_top = -25.0
 margin_right = 400.0
-margin_bottom = 240.0
+margin_bottom = 275.0
 rect_min_size = Vector2( 800, 300 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="name" type="Label" parent="mode_select"]
+[node name="title" type="Label" parent="mode_select"]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -132.0
-margin_right = -4.00006
-margin_bottom = 14.0
+margin_top = 20.0
+margin_right = -4.0
+margin_bottom = 34.0
 rect_scale = Vector2( 2, 2 )
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0.729412, 0.760784, 0.729412, 1 )
-custom_colors/font_color_shadow = Color( 0.360784, 0.376471, 0.360784, 1 )
+custom_colors/font_color_shadow = Color( 0.465454, 0.484375, 0.465454, 1 )
 text = "Streamer"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -59,16 +60,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -112.5
-margin_top = -50.0
-margin_right = 137.5
-margin_bottom = 50.0
+margin_left = -92.5
+margin_top = -60.0
+margin_right = 157.5
+margin_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_scale = Vector2( 1.5, 1.5 )
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0.729412, 0.760784, 0.729412, 1 )
-custom_colors/font_color_shadow = Color( 0.360784, 0.376471, 0.360784, 1 )
 text = "Have chat control each team through bot commands!"
 align = 1
 valign = 1
@@ -77,35 +77,89 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="local" type="Sprite" parent="mode_select"]
+position = Vector2( 212.5, 164 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 9 )
+
 [node name="streamer" type="Sprite" parent="mode_select"]
-position = Vector2( 212.5, 174 )
+position = Vector2( 212.5, 164 )
 scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 3 )
 
+[node name="external" type="Sprite" parent="mode_select"]
+position = Vector2( 212.5, 164 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 10 )
+
 [node name="play" type="TextureButton" parent="mode_select"]
-margin_left = 270.0
-margin_top = 300.0
-margin_right = 520.0
-margin_bottom = 350.0
-texture_normal = ExtResource( 4 )
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -90.5
+margin_right = 0.5
+margin_bottom = 24.0
+rect_scale = Vector2( 2, 2 )
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 8 )
+texture_hover = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="text" type="Label" parent="mode_select/play"]
+[node name="left" type="TextureButton" parent="mode_select"]
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-margin_left = -125.0
-margin_right = 3.0
-margin_bottom = 22.0
+anchor_bottom = 0.5
+margin_left = -375.0
+margin_top = -20.0
+margin_right = -335.0
+margin_bottom = 20.0
 rect_scale = Vector2( 2, 2 )
+texture_normal = ExtResource( 6 )
+texture_pressed = ExtResource( 6 )
+texture_hover = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="right" type="TextureButton" parent="mode_select"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -0.999939
+margin_top = -20.0
+margin_right = 39.0001
+margin_bottom = 20.0
+rect_scale = Vector2( -2, 2 )
+texture_normal = ExtResource( 6 )
+texture_pressed = ExtResource( 6 )
+texture_hover = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="not_supported" type="Label" parent="mode_select"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -176.0
+margin_top = 160.0
+margin_right = 176.0
+margin_bottom = 193.0
 custom_fonts/font = ExtResource( 1 )
-custom_colors/font_color = Color( 0.729412, 0.760784, 0.729412, 1 )
-custom_colors/font_color_shadow = Color( 0.360784, 0.376471, 0.360784, 1 )
-text = "Play"
+custom_colors/font_color = Color( 0.780392, 0.635294, 0.564706, 1 )
+text = "Not supported in HTML,
+download to use."
 align = 1
-valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="button_up" from="mode_select/play" to="." method="_on_play_button_up"]
+[connection signal="button_up" from="mode_select/left" to="." method="_on_left_button_up"]
+[connection signal="button_up" from="mode_select/right" to="." method="_on_right_button_up"]
